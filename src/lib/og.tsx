@@ -4,6 +4,7 @@ import { cacheLife } from "next/cache";
 import { ImageResponse } from "next/og";
 import { VanShapes } from "@/components/illustrations/van";
 import { site } from "@/config/site";
+import { MEDIA_URL_PREFIX, resolveMediaFile } from "@/modules/media/storage";
 import type { BodyType, Palette } from "@/modules/vehicles/types";
 
 export const OG_SIZE = { width: 1200, height: 630 } as const;
@@ -35,13 +36,19 @@ async function loadFonts() {
  * Zdjęcie z `public/` jako data URI (generator OG nie ma dostępu do `next/image`).
  * Dozwolone są tylko ścieżki z naszych danych (`/vehicles/…jpg`).
  */
-async function loadPhoto(publicPath: string): Promise<string | null> {
+async function loadPhoto(photoUrl: string): Promise<string | null> {
   "use cache";
   cacheLife("max");
-  if (!/^\/[\w./-]+\.jpe?g$/i.test(publicPath) || publicPath.includes("..")) return null;
+  if (!/^\/[\w./-]+\.jpe?g$/i.test(photoUrl) || photoUrl.includes("..")) return null;
+
+  // Zdjęcia z panelu (`/media/...`) leżą w katalogu mediów, a statyczne (`/vehicles/...`) w `public/`.
+  const file = photoUrl.startsWith(MEDIA_URL_PREFIX)
+    ? resolveMediaFile(photoUrl.slice(MEDIA_URL_PREFIX.length).split("/"))
+    : path.join(process.cwd(), "public", photoUrl);
+  if (!file) return null;
+
   try {
-    const file = await readFile(path.join(process.cwd(), "public", publicPath));
-    return `data:image/jpeg;base64,${file.toString("base64")}`;
+    return `data:image/jpeg;base64,${(await readFile(file)).toString("base64")}`;
   } catch {
     return null;
   }
@@ -54,7 +61,7 @@ type OgInput = {
   /** Ilustracja awaryjna, gdy auto nie ma zdjęcia. */
   body: BodyType;
   palette: Palette;
-  /** Ścieżka zdjęcia w `public/`, np. `/vehicles/ford-transit-custom-l2h1.jpg`. */
+  /** Adres zdjęcia: `/vehicles/…jpg` (z `public/`) albo `/media/…jpg` (wgrane z panelu). */
   photo?: string;
 };
 

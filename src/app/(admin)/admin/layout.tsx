@@ -1,19 +1,37 @@
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import type { Metadata, Viewport } from "next";
+import { Suspense, type ReactNode } from "react";
+import { AdminSkeleton } from "@/components/admin/admin-skeleton";
+import { ServiceWorkerRegister } from "@/components/admin/service-worker-register";
 
 /**
- * Miejsce na panel administracyjny (PWA). Osobna grupa tras `(admin)` ma
- * własny layout bez nagłówka/stopki strony publicznej. Sekcja nigdy nie jest
+ * Panel administracyjny (PWA, mobile first). Osobna grupa tras `(admin)` ma
+ * własny layout bez nagłówka i stopki strony publicznej. Sekcja nigdy nie jest
  * indeksowana i jest wykluczona w robots.txt.
  *
- * Następne kroki opisuje docs/ARCHITECTURE.md (auth, role, CRUD floty,
- * manifest + service worker, `updateTag("vehicles")` po zapisie).
+ * Strony panelu czytają ciasteczko sesji (dane dynamiczne), dlatego całość leży
+ * w <Suspense>, a walidację „instant navigation" wyłączamy – panel nie ma być
+ * prerenderowany, tylko zawsze sprawdzać sesję na serwerze.
  */
+export const instant = false;
+
 export const metadata: Metadata = {
-  title: "Panel administracyjny",
+  title: { default: "Panel", template: "%s | Panel VCars" },
   robots: { index: false, follow: false },
+  manifest: "/admin/manifest.webmanifest",
+  appleWebApp: { capable: true, title: "Panel VCars", statusBarStyle: "black" },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#000000",
 };
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
-  return <div className="min-h-dvh bg-mist">{children}</div>;
+  return (
+    <div className="min-h-dvh bg-mist">
+      <Suspense fallback={<AdminSkeleton />}>{children}</Suspense>
+      <ServiceWorkerRegister />
+    </div>
+  );
 }

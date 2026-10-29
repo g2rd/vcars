@@ -30,6 +30,7 @@ export const licenseCategoryEnum = pgEnum("license_category", LICENSE_CATEGORIES
 export const paletteEnum = pgEnum("palette", PALETTES);
 export const vehicleStatusEnum = pgEnum("vehicle_status", VEHICLE_STATUSES);
 export const inquiryStatusEnum = pgEnum("inquiry_status", ["new", "contacted", "closed"]);
+export const userRoleEnum = pgEnum("user_role", ["owner", "staff"]);
 
 const timestamps = {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
@@ -149,6 +150,47 @@ export const inquiries = pgTable(
   },
   (t) => [index("inquiries_status_created_idx").on(t.status, t.createdAt)],
 );
+
+/** Konta panelu administracyjnego (szef = `owner`, pracownik = `staff`). */
+export const users = pgTable("users", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  /** Zawsze małymi literami. */
+  email: text("email").notNull().unique(),
+  name: text("name").notNull(),
+  role: userRoleEnum("role").notNull().default("staff"),
+  /** Hasz scrypt w formacie `scrypt$N$r$p$sól$hasz` (zob. modules/auth/password.ts). */
+  passwordHash: text("password_hash").notNull(),
+  isActive: boolean("is_active").notNull().default(true),
+  /** Licznik nieudanych logowań z rzędu; po przekroczeniu limitu konto jest blokowane czasowo. */
+  failedLoginCount: integer("failed_login_count").notNull().default(0),
+  lockedUntil: timestamp("locked_until", { withTimezone: true }),
+  lastLoginAt: timestamp("last_login_at", { withTimezone: true }),
+  ...timestamps,
+});
+
+/** Sesje logowania. W bazie trzymamy tylko hasz tokenu z ciasteczka, nigdy sam token. */
+export const sessions = pgTable(
+  "sessions",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    tokenHash: text("token_hash").notNull().unique(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    userAgent: text("user_agent"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("sessions_user_idx").on(t.userId)],
+);
+
+export const usersRelations = relations(users, ({ many }) => ({
+  sessions: many(sessions),
+}));
+
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users, { fields: [sessions.userId], references: [users.id] }),
+}));
 
 export const vehicleCategoriesRelations = relations(vehicleCategories, ({ many }) => ({
   vehicles: many(vehicles),

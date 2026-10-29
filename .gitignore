@@ -45,3 +45,6 @@ next-env.d.ts
 
 # Zachowaj przykładowy plik środowiska
 !.env.example
+
+# Dane lokalne (baza embedded-postgres, wgrane pliki)
+/.data/

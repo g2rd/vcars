@@ -47,3 +47,21 @@ export function pluralPl(n: number, one: string, few: string, many: string): str
   if (last >= 2 && last <= 4 && !(lastTwo >= 12 && lastTwo <= 14)) return few;
   return many;
 }
+
+/** „2026-11-10T08:30:00Z" → „10.11.2026, 09:30" (czas Europy/Warszawy). */
+export function formatDateTime(iso: string): string {
+  return new Date(iso).toLocaleString("pl-PL", {
+    timeZone: "Europe/Warsaw",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+/** „2026-11-10" → „10.11.2026" (bez konwersji stref czasowych). */
+export function formatDate(isoDate: string): string {
+  const [year, month, day] = isoDate.split("-");
+  return `${day}.${month}.${year}`;
+}

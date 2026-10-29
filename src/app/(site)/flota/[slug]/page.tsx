@@ -37,11 +37,13 @@ import { FUEL_LABELS, GEARBOX_LABELS, vehicleName } from "@/modules/vehicles/typ
 type Props = { params: Promise<{ slug: string }> };
 
 /**
- * Świadomie wyłączamy dev-ową walidację „instant navigation": czytamy `params`
- * przed renderem, dzięki czemu nieznany adres zwraca prawdziwe HTTP 404.
- * Owinięcie w <Suspense> wysłałoby status 200 z treścią „nie znaleziono"
- * (soft 404 – szkodliwe dla SEO). Znane auta i tak są prerenderowane
+ * Wyłączamy dev-ową walidację „instant navigation": strona czyta `params` i dane
+ * przed odpowiedzią, a nie za <Suspense>. Znane auta i tak są prerenderowane
  * przez `generateStaticParams`, więc nawigacja do nich jest szybka.
+ *
+ * Nieznany lub ukryty adres dostaje prawdziwe HTTP 404 w `proxy.ts`, jeszcze
+ * przed renderem; `notFound()` poniżej to druga linia obrony (strona dostaje wtedy
+ * noindex, ale po rozpoczęciu streamingu status mógłby już być 200).
  */
 export const instant = false;
 

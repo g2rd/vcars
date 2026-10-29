@@ -17,7 +17,7 @@ import { vehicleName } from "@/modules/vehicles/types";
 
 type Props = { params: Promise<{ kategoria: string }> };
 
-/** Zob. uzasadnienie w `flota/[slug]/page.tsx`: prawdziwe 404 > instant UI dla nieznanych adresów. */
+/** Zob. uzasadnienie w `flota/[slug]/page.tsx` (prawdziwe 404 zapewnia `proxy.ts`). */
 export const instant = false;
 
 export async function generateStaticParams() {

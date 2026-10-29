@@ -11,12 +11,15 @@ const schema = z.object({
   ALLOW_INDEXING: z.enum(["true", "false"]).default("false"),
   /** Brak = tryb demo (dane z `modules/vehicles/demo-data.ts`, zapytania tylko w logu). */
   DATABASE_URL: z.string().min(1).optional(),
+  /** Katalog na zdjęcia wgrywane z panelu (dysk serwera). Na hostingu bezdyskowym użyj S3/R2. */
+  MEDIA_DIR: z.string().min(1).default(".data/media"),
 });
 
 const parsed = schema.parse({
   NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || undefined,
   ALLOW_INDEXING: process.env.ALLOW_INDEXING || undefined,
   DATABASE_URL: process.env.DATABASE_URL || undefined,
+  MEDIA_DIR: process.env.MEDIA_DIR || undefined,
 });
 
 export const env = {
@@ -24,4 +27,5 @@ export const env = {
   siteUrl: parsed.NEXT_PUBLIC_SITE_URL.replace(/\/+$/, ""),
   allowIndexing: parsed.ALLOW_INDEXING === "true",
   databaseUrl: parsed.DATABASE_URL,
+  mediaDir: parsed.MEDIA_DIR,
 } as const;

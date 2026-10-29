@@ -24,6 +24,10 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   poweredByHeader: false,
+  experimental: {
+    // Panel przyjmuje zdjęcia z telefonu (do 5 plików naraz, każdy do 10 MB).
+    serverActions: { bodySizeLimit: "55mb" },
+  },
   turbopack: {
     rules: {
       "*.css": {
@@ -37,6 +41,14 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      {
+        // Service worker musi być zawsze świeży, inaczej aktualizacje panelu utkną w cache.
+        source: "/admin/sw.js",
+        headers: [
+          { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" },
+          { key: "Service-Worker-Allowed", value: "/admin/" },
+        ],
+      },
       {
         source: "/:path*",
         headers: [
