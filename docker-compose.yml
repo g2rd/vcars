@@ -1,0 +1,15 @@
+# Lokalny Postgres na potrzeby rozwoju (opcjonalny – bez niego działa tryb demo).
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: vcars
+      POSTGRES_PASSWORD: vcars
+      POSTGRES_DB: vcars
+    ports:
+      - "5432:5432"
+    volumes:
+      - vcars-db:/var/lib/postgresql/data
+
+volumes:
+  vcars-db:
