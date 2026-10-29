@@ -52,8 +52,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang={site.language} className={inter.variable}>
-      <body className="flex min-h-dvh flex-col antialiased">{children}</body>
+    // suppressHydrationWarning: rozszerzenia przeglądarki (Grammarly, Dark Reader…) dopisują
+    // atrybuty do <html>/<body> przed hydracją. Wycisza to różnice tylko w atrybutach tych
+    // dwóch elementów – zawartość strony nadal jest sprawdzana.
+    <html lang={site.language} className={inter.variable} suppressHydrationWarning>
+      <body className="flex min-h-dvh flex-col antialiased" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }
