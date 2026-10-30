@@ -29,6 +29,10 @@ hostingu produkcyjnego.
 ### Strona internetowa (responsywna: telefon, tablet, komputer)
 
 - [x] Strona główna (wyszukiwarka terminu, kategorie, polecane auta, FAQ, obszar działania)
+- [x] Karuzela na górze strony głównej: auta z floty (cena od, link do karty) i slajdy z promocjami
+      lub bonusami; przewija się sama (pauza po dotknięciu, najechaniu i na przycisku), przesuwa
+      palcem, ma kropki i strzałki. Promocje są w pliku konfiguracji `src/content/promotions.ts`
+      (przykładowa promocja w demo wylicza się z cen floty)
 - [x] Lista aut i karty pojazdów (parametry, cennik z progami, wyposażenie, zdjęcia)
 - [x] Strony kategorii (małe dostawcze, furgony, duże furgony, kontenery z windą)
 - [x] Cennik (na telefonie karty, na komputerze tabela)
@@ -186,6 +190,7 @@ sekcja „Co dalej”.
 | 2026-10-30 | Mapa Google na żądanie i przycisk „Prowadź do nas” (strona główna i kontakt) |
 | 2026-10-30 | Instalacja PWA wyłączona (to późniejszy etap), poprawka przewijania po zmianie strony |
 | 2026-10-30 | Publiczne demo dla klienta (tymczasowy link) do wstępnej akceptacji |
+| 2026-10-30 | Karuzela aut i promocji na stronie głównej (automatyczne przewijanie, mobile first) |
 
 ## Otwarte decyzje i pytania do klienta
 
@@ -194,3 +199,5 @@ sekcja „Co dalej”.
 - Kto zakłada wizytówkę Google i kto potwierdza weryfikację
 - Czy chcemy powiadomienia e-mail o nowych zapytaniach już w Etapie 2
 - Kiedy włączamy instalację aplikacji na telefonie (PWA)
+- Kto i jak zmienia promocje w karuzeli: na razie plik konfiguracji (zmienia Wykonawca), edycja
+  promocji w panelu administracyjnym byłaby osobną funkcją do wyceny (§ 8)

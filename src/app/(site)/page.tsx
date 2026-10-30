@@ -5,6 +5,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { CategoryCard } from "@/components/site/category-card";
 import { CtaBand } from "@/components/site/cta-band";
 import { FaqList } from "@/components/site/faq-list";
+import { HeroCarousel } from "@/components/site/hero-carousel";
 import { HeroSearch } from "@/components/site/hero-search";
 import { PhotoFrame } from "@/components/site/photo-frame";
 import { VehicleCard } from "@/components/site/vehicle-card";
@@ -12,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { NavigationIcon } from "@/components/ui/icons";
 import { site } from "@/config/site";
 import { faq } from "@/content/faq";
+import { buildHeroSlides } from "@/content/hero-slides";
 import { directionsUrl } from "@/lib/maps";
 import { itemListNode, jsonLdGraph, webPageNode } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -66,11 +68,10 @@ export default async function HomePage() {
     countByCategory.set(vehicle.categorySlug, (countByCategory.get(vehicle.categorySlug) ?? 0) + 1);
   }
   const popular = vehicles.slice(0, 6);
-  // Zdjęcia sekcji hero i „Dlaczego" – konkretne auta z floty (fallback: ilustracje).
-  const heroPhoto = (
-    vehicles.find((v) => v.slug === "ford-transit-custom-l2h1") ??
-    vehicles.find((v) => v.images.length > 0)
-  )?.images[0];
+  // Karuzela w hero: auta z floty (pierwszy slajd = najchętniej wynajmowany model) i promocje
+  // z `content/promotions.ts`. Bez żadnego zdjęcia zostaje ilustracja.
+  const heroSlides = buildHeroSlides(vehicles, { featuredSlug: "ford-transit-custom-l2h1" });
+  // Zdjęcie sekcji „Dlaczego" – konkretne auto z floty (fallback: ilustracja).
   const whyPhoto = (
     vehicles.find((v) => v.slug === "renault-master-l3h2") ??
     vehicles.find((v) => v.images.length > 0)
@@ -89,27 +90,31 @@ export default async function HomePage() {
         )}
       />
 
-      <section className="container-page grid gap-8 py-8 md:grid-cols-[5fr_6fr] md:items-center md:gap-12 md:py-14">
-        <div>
+      {/*
+        Telefon: nagłówek → karuzela → wyszukiwarka, żeby auta były widoczne od razu, bez
+        przewijania. Komputer: tekst i wyszukiwarka po lewej, karuzela po prawej na obu wierszach.
+      */}
+      <section className="container-page grid gap-6 py-6 md:grid-cols-[5fr_6fr] md:grid-rows-[auto_auto] md:items-center md:gap-x-12 md:gap-y-8 md:py-14">
+        <div className="md:col-start-1 md:row-start-1 md:self-end">
           <h1 className="type-display">
             {`${site.tagline} w ${site.address.cityLocative}`}
           </h1>
           <p className="mt-4 text-subheading text-slate">
             Furgony, duże busy i kontenery z windą. Ceny netto, szybki odbiór i umowa bez kolejek.
           </p>
-          <HeroSearch categories={categories} className="mt-8 max-w-md" />
         </div>
-        {heroPhoto ? (
-          <PhotoFrame
-            image={heroPhoto}
-            sizes="(min-width: 1200px) 628px, (min-width: 768px) 54vw, 100vw"
-            preload
-            aspectClassName="aspect-[4/3]"
-            imageClassName="object-right"
+        {heroSlides.length > 0 ? (
+          <HeroCarousel
+            slides={heroSlides}
+            className="md:col-start-2 md:row-span-2 md:row-start-1"
           />
         ) : (
-          <HeroScene className="aspect-square w-full rounded-ui" />
+          <HeroScene className="aspect-square w-full rounded-ui md:col-start-2 md:row-span-2 md:row-start-1" />
         )}
+        <HeroSearch
+          categories={categories}
+          className="max-w-md md:col-start-1 md:row-start-2 md:self-start"
+        />
       </section>
 
       <section className="container-page py-12 md:py-16" aria-labelledby="kategorie">

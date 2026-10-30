@@ -49,6 +49,18 @@ export const PinIcon = (props: IconProps) => (
   </Icon>
 );
 
+export const PauseIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M6 5h4v14H6zm8 0h4v14h-4z" />
+  </Icon>
+);
+
+export const PlayIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M8 5v14l11-7z" />
+  </Icon>
+);
+
 export const NavigationIcon = (props: IconProps) => (
   <Icon {...props}>
     <path d="M12 2 4.5 20.3l.7.7L12 18l6.8 3 .7-.7z" />
