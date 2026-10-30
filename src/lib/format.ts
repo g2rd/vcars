@@ -38,6 +38,12 @@ export function formatKm(km: number): string {
   return `${km.toLocaleString("pl-PL")} km`;
 }
 
+/** Łączy ostatni wyraz z poprzednim twardą spacją, żeby np. numer domu nie zawijał się sam do nowego wiersza. */
+export function tieLastWord(text: string): string {
+  const index = text.lastIndexOf(" ");
+  return index === -1 ? text : `${text.slice(0, index)} ${text.slice(index + 1)}`;
+}
+
 /** Zwraca słowo w odpowiedniej formie liczby: 1 doba, 2 doby, 5 dób. */
 export function pluralPl(n: number, one: string, few: string, many: string): string {
   const abs = Math.abs(n);

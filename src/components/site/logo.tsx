@@ -1,19 +1,40 @@
+import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/config/site";
+import { cn } from "@/lib/cn";
 
-/** Znak: biały kwadrat z literą „V" + słowny znak. Do użycia na czarnej belce. */
-export function Logo({ href = "/", label }: { href?: string; label?: string }) {
+type LogoProps = {
+  href?: string;
+  label?: string;
+  /** `md` – pasek nagłówka i panelu, `lg` – stopka. */
+  size?: "md" | "lg";
+  className?: string;
+};
+
+/**
+ * Logo firmy (SVG z `public/brand`) w wersji białej na czarne belki: nagłówek, panel
+ * i stopka. Podpis „Wynajem samochodów" jest pominięty, bo przy wysokości paska byłby
+ * nieczytelny; pełne wersje (z podpisem i sylwetką busa) leżą obok w `public/brand`.
+ */
+export function Logo({ href = "/", label, size = "md", className }: LogoProps) {
+  const large = size === "lg";
+
   return (
     <Link
       href={href}
-      className="flex min-h-11 items-center gap-2.5 text-paper"
+      className={cn("flex min-h-11 items-center text-paper", className)}
       aria-label={label ?? `${site.name} – strona główna`}
     >
-      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false">
-        <rect width="32" height="32" rx="6" fill="#fff" />
-        <path d="M7.5 9h4.1l4.4 10.4L20.4 9h4.1l-6.6 15h-3.8z" fill="#000" />
-      </svg>
-      <span className="text-subheading font-medium tracking-tight">{site.name}</span>
+      {/* SVG nie wymaga optymalizacji obrazów; alt pusty, bo nazwę podaje link (aria-label). */}
+      <Image
+        src="/brand/logo-wordmark-negative.svg"
+        alt=""
+        width={large ? 220 : 171}
+        height={large ? 36 : 28}
+        unoptimized
+        loading="eager"
+        className={cn("w-auto", large ? "h-9" : "h-7")}
+      />
     </Link>
   );
 }

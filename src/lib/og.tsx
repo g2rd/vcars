@@ -54,6 +54,14 @@ async function loadPhoto(photoUrl: string): Promise<string | null> {
   }
 }
 
+/** Logo (czarne, wersja na jasne tło) jako data URI do wstawienia w kartę OG. */
+async function loadLogo(): Promise<string> {
+  "use cache";
+  cacheLife("max");
+  const svg = await readFile(path.join(process.cwd(), "public", "brand", "logo-wordmark.svg"));
+  return `data:image/svg+xml;base64,${svg.toString("base64")}`;
+}
+
 type OgInput = {
   title: string;
   subtitle: string;
@@ -67,9 +75,10 @@ type OgInput = {
 
 /** Karta 1200×630 do udostępniania w mediach społecznościowych. */
 export async function renderOgImage({ title, subtitle, footer, body, palette, photo }: OgInput) {
-  const [fonts, photoUri] = await Promise.all([
+  const [fonts, photoUri, logoUri] = await Promise.all([
     loadFonts(),
     photo ? loadPhoto(photo) : Promise.resolve(null),
+    loadLogo(),
   ]);
   if (photo && !photoUri) console.warn("[og] nie udało się wczytać zdjęcia", photo);
 
@@ -94,12 +103,9 @@ export async function renderOgImage({ title, subtitle, footer, body, palette, ph
             padding: 64,
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", fontSize: 36 }}>
-            <svg width="48" height="48" viewBox="0 0 32 32">
-              <rect width="32" height="32" rx="6" fill="#000" />
-              <path d="M7.5 9h4.1l4.4 10.4L20.4 9h4.1l-6.6 15h-3.8z" fill="#fff" />
-            </svg>
-            <div style={{ display: "flex", marginLeft: 16 }}>{site.name}</div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element -- generator OG nie używa next/image */}
+            <img src={logoUri} alt={site.name} width={276} height={45} />
           </div>
 
           <div style={{ display: "flex", flexDirection: "column" }}>

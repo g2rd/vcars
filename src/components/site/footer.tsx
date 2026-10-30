@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { mainNav, site } from "@/config/site";
+import { tieLastWord } from "@/lib/format";
 import { getCategories } from "@/modules/vehicles/queries";
+import { Logo } from "./logo";
 
 const linkClass = "text-body-sm text-ash hover:text-paper hover:underline";
 const headingClass = "mb-3 text-body-sm font-medium text-paper";
@@ -12,6 +14,7 @@ export async function SiteFooter() {
   return (
     <footer className="on-dark bg-ink pb-24 pt-12 text-paper md:pb-12 md:pt-16">
       <div className="container-page">
+        <Logo size="lg" className="mb-8" />
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           <nav aria-label="Flota">
             <h2 className={headingClass}>Flota</h2>
@@ -78,7 +81,7 @@ export async function SiteFooter() {
               <p>
                 <span className="text-paper">{site.name}</span>
                 <br />
-                {site.address.street}
+                {tieLastWord(site.address.street)}
                 <br />
                 {site.address.postalCode} {site.address.city}
               </p>

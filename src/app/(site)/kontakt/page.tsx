@@ -6,6 +6,7 @@ import { InquiryForm } from "@/components/site/inquiry-form";
 import { Button } from "@/components/ui/button";
 import { ClockIcon, NavigationIcon, PhoneIcon, PinIcon } from "@/components/ui/icons";
 import { site } from "@/config/site";
+import { tieLastWord } from "@/lib/format";
 import { directionsUrl, mapEmbedUrl } from "@/lib/maps";
 import { breadcrumbNode, jsonLdGraph, webPageNode } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -89,7 +90,7 @@ export default async function ContactPage() {
               <address className="mt-3 text-body not-italic">
                 {site.name}
                 <br />
-                {site.address.street}
+                {tieLastWord(site.address.street)}
                 <br />
                 {site.address.postalCode} {site.address.city}
               </address>

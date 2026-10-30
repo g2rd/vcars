@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatPln, formatVolume, pluralPl } from "./format";
+import { formatPln, formatVolume, pluralPl, tieLastWord } from "./format";
 import { highestDailyRateNet, lowestDailyRateNet, quote, tierFor, withVat } from "./pricing";
 
 const tiers = [
@@ -71,5 +71,10 @@ describe("formatowanie", () => {
     expect(pluralPl(5, "doba", "doby", "dób")).toBe("dób");
     expect(pluralPl(12, "doba", "doby", "dób")).toBe("dób");
     expect(pluralPl(22, "doba", "doby", "dób")).toBe("doby");
+  });
+
+  it("wiąże ostatni wyraz twardą spacją, żeby numer domu nie zostawał sam w wierszu", () => {
+    expect(tieLastWord("ul. Dionizego Trocera 20")).toBe("ul. Dionizego Trocera 20");
+    expect(tieLastWord("Zabrze")).toBe("Zabrze");
   });
 });

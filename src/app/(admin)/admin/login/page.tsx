@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { LoginForm } from "@/components/admin/login-form";
@@ -19,12 +20,17 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
     <main className="flex min-h-dvh items-center justify-center px-4 py-10">
       <div className="w-full max-w-sm">
         <div className="mb-6 text-center">
-          <svg viewBox="0 0 32 32" width="48" height="48" aria-hidden="true" className="mx-auto">
-            <rect width="32" height="32" rx="6" fill="#000" />
-            <path d="M7.5 9h4.1l4.4 10.4L20.4 9h4.1l-6.6 15h-3.8z" fill="#fff" />
-          </svg>
+          {/* Czarna wersja logo na jasne tło; SVG nie wymaga optymalizacji obrazów. */}
+          <Image
+            src="/brand/logo-wordmark.svg"
+            alt={site.name}
+            width={220}
+            height={36}
+            unoptimized
+            loading="eager"
+            className="mx-auto h-9 w-auto"
+          />
           <h1 className="mt-4 text-heading-sm font-medium">Panel wypożyczalni</h1>
-          <p className="mt-1 text-body-sm text-slate">{site.name}</p>
         </div>
 
         <div className="rounded-ui bg-paper p-6">
