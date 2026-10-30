@@ -14,6 +14,8 @@ const contentSecurityPolicy = [
   "frame-ancestors 'self'",
   "object-src 'none'",
   "img-src 'self' data: blob:",
+  // Mapa Google jest osadzana w ramce dopiero po kliknięciu (components/site/click-to-load-map.tsx).
+  "frame-src https://www.google.com",
   "font-src 'self' data:",
   "style-src 'self' 'unsafe-inline'",
   "script-src 'self' 'unsafe-inline'",

@@ -49,6 +49,12 @@ export const PinIcon = (props: IconProps) => (
   </Icon>
 );
 
+export const NavigationIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M12 2 4.5 20.3l.7.7L12 18l6.8 3 .7-.7z" />
+  </Icon>
+);
+
 export const ClockIcon = (props: IconProps) => (
   <Icon {...props}>
     <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1.2 5v4.8l3.7 2.2-1 1.7-4.9-2.9V7z" />

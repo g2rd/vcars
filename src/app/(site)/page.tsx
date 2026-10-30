@@ -9,8 +9,10 @@ import { HeroSearch } from "@/components/site/hero-search";
 import { PhotoFrame } from "@/components/site/photo-frame";
 import { VehicleCard } from "@/components/site/vehicle-card";
 import { Button } from "@/components/ui/button";
+import { NavigationIcon } from "@/components/ui/icons";
 import { site } from "@/config/site";
 import { faq } from "@/content/faq";
+import { directionsUrl } from "@/lib/maps";
 import { itemListNode, jsonLdGraph, webPageNode } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { getCategories, getVehicles } from "@/modules/vehicles/queries";
@@ -198,6 +200,16 @@ export default async function HomePage() {
               całym Górnym Śląsku. Obsługujemy m.in.: {site.serviceAreas.join(", ")}. Planujesz
               dłuższą trasę? Zapytaj o pakiet kilometrów.
             </p>
+            <Button
+              href={directionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="secondary"
+              className="mt-5 w-full sm:w-auto"
+            >
+              <NavigationIcon width={18} height={18} />
+              Prowadź do nas
+            </Button>
           </div>
           <div className="rounded-ui bg-mist p-6">
             <h3 className="text-subheading font-medium">Godziny otwarcia</h3>

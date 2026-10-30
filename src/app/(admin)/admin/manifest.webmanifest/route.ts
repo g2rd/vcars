@@ -1,10 +1,14 @@
 import { site } from "@/config/site";
+import { env } from "@/lib/env";
 
 /**
  * Manifest PWA panelu: aplikacja „VCars Panel" otwiera się od `/admin`, w osobnym
- * zakresie, niezależnie od strony publicznej (ta ma własny manifest).
+ * zakresie. Strona publiczna nie ma manifestu (nie jest aplikacją do instalacji).
+ * Dopóki PWA jest wyłączone (`ENABLE_PWA`), odpowiada 404, więc nie da się go zainstalować.
  */
 export function GET() {
+  if (!env.pwaEnabled) return new Response(null, { status: 404 });
+
   const manifest = {
     name: `Panel wypożyczalni ${site.name}`,
     short_name: "Panel VCars",

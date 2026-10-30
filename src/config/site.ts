@@ -27,16 +27,17 @@ export const site = {
   phone: { display: "+48 500 000 000", e164: "+48500000000" },
   email: "kontakt@vcars.example",
 
+  /** Adres TYMCZASOWY na potrzeby demo (współrzędne z OpenStreetMap). Podmień na adres klienta. */
   address: {
-    street: "ul. Przykładowa 1",
-    postalCode: "41-800",
+    street: "ul. Dionizego Trocera 20",
+    postalCode: "41-819",
     city: "Zabrze",
     cityLocative: "Zabrzu",
     region: "śląskie",
     countryCode: "PL",
   },
   /** Min. 5 miejsc po przecinku – tego oczekuje Google dla `geo`. */
-  geo: { latitude: 50.32492, longitude: 18.78576 },
+  geo: { latitude: 50.30909, longitude: 18.76609 },
 
   openingHours: [
     {

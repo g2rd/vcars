@@ -1,7 +1,7 @@
 # VCars – wypożyczalnia samochodów dostawczych
 
 Strona internetowa wypożyczalni busów i aut dostawczych **wraz z panelem administracyjnym dla szefa**
-(PWA, mobile first). „Wariant A" z planu wdrożenia: jedna aplikacja Next.js + PostgreSQL, bez multi-tenant.
+(mobile first; tryb PWA przygotowany, ale wyłączony do późniejszego etapu). „Wariant A" z planu wdrożenia: jedna aplikacja Next.js + PostgreSQL, bez multi-tenant.
 
 > **Status:** wersja demonstracyjna. Dane firmy i floty są przykładowe, zdjęcia poglądowe
 > (Wikimedia Commons), a indeksowanie przez wyszukiwarki jest wyłączone.
@@ -76,9 +76,11 @@ Zbudowany dla telefonu (dolny pasek zakładek, duże cele dotykowe), na komputer
 - **Zapytania** – skrzynka klientów: telefon i e-mail jednym dotknięciem, statusy
   *nowe / w kontakcie / zamknięte*, plakietka z liczbą nowych w menu.
 - **Konto** – zmiana hasła (wylogowuje inne urządzenia), wylogowanie.
-- **PWA** – manifest w zakresie `/admin`, ikony (w tym maskable), service worker z ekranem offline.
-  Na telefonie: menu przeglądarki → „Dodaj do ekranu głównego". Service worker nie cache'uje danych
-  panelu, tylko niezmienne zasoby.
+- **PWA (domyślnie wyłączone)** – to późniejszy etap, więc strona i panel **nie są instalowalne**:
+  `/admin/manifest.webmanifest` odpowiada 404, nie ma service workera ani metadanych aplikacji.
+  Gotowy kod (manifest w zakresie `/admin`, ikony, service worker z ekranem offline, który nie
+  cache'uje danych panelu) włączasz zmienną `ENABLE_PWA=true` i przebudowaniem. Przy wyłączonej
+  fladze panel wyrejestrowuje service worker z wcześniejszych wersji.
 
 Każda zmiana w panelu od razu odświeża stronę publiczną, sitemapę, `llms.txt` i obrazy OG
 (unieważnienie cache przez `updateTag`).
@@ -100,9 +102,9 @@ Każda zmiana w panelu od razu odświeża stronę publiczną, sitemapę, `llms.t
 src/
   app/
     (site)/            strony publiczne (header, stopka, JSON-LD całego serwisu)
-    (admin)/admin/     panel: login, (panel)/ – strony dla zalogowanych, manifest, offline
+    (admin)/admin/     panel: login, (panel)/ – strony dla zalogowanych, manifest (tylko ENABLE_PWA), offline
     media/[...path]/   serwowanie zdjęć wgranych z panelu
-    sitemap.ts, robots.ts, manifest.ts, llms.txt/, opengraph-image.tsx
+    sitemap.ts, robots.ts, llms.txt/, opengraph-image.tsx
   proxy.ts             404 dla nieznanych adresów + wstępna ochrona /admin
   modules/
     vehicles/          model, zapytania z cache, repozytoria, administracja flotą (admin*.ts)
@@ -114,8 +116,9 @@ src/
   config/site.ts       dane firmy (NAP), nawigacja, zasady najmu
   components/          ui, site, admin, seo, illustrations
 drizzle/               migracje SQL
-public/admin/          service worker i ikony PWA
+public/admin/          service worker i ikony PWA (używane tylko przy ENABLE_PWA=true)
 docs/ARCHITECTURE.md   decyzje i plan dalszych prac
+docs/ETAPY.md          etapy z umowy i bieżący postęp prac (co zrobione, co zostało)
 ```
 
 ## SEO – co jest wbudowane
@@ -126,7 +129,7 @@ docs/ARCHITECTURE.md   decyzje i plan dalszych prac
   działania, katalog), `WebSite`, `WebPage`/`CollectionPage`/`ContactPage`, `BreadcrumbList`,
   `ItemList`, `Product` + `Offer` (stawka dobowa netto) dla każdego auta.
 - **Techniczne:** `sitemap.xml` z prawdziwymi datami zmian i mapą zdjęć, `robots.txt`,
-  `llms.txt`, obrazy OG ze zdjęciem auta, manifest, ikony, nagłówki bezpieczeństwa (HSTS, CSP na
+  `llms.txt`, obrazy OG ze zdjęciem auta, ikony, nagłówki bezpieczeństwa (HSTS, CSP na
   produkcji), **prawdziwe HTTP 404** dla nieznanych i ukrytych aut (`proxy.ts`).
 - **Struktura pod frazy lokalne:** strony kategorii (`/wynajem/<kategoria>`) i kart aut
   (`/flota/<slug>`) z unikalną treścią, okruszki, linkowanie wewnętrzne.

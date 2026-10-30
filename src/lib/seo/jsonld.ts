@@ -1,6 +1,7 @@
 import "server-only";
 import { site } from "@/config/site";
 import { env } from "@/lib/env";
+import { mapPlaceUrl } from "@/lib/maps";
 import { highestDailyRateNet, lowestDailyRateNet } from "@/lib/pricing";
 import { absoluteUrl } from "@/lib/seo/metadata";
 import {
@@ -59,6 +60,7 @@ export function businessNode(input: {
       latitude: site.geo.latitude,
       longitude: site.geo.longitude,
     },
+    hasMap: mapPlaceUrl,
     openingHoursSpecification: site.openingHours.map((h) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: [...h.days],

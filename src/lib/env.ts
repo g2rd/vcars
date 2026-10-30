@@ -13,6 +13,8 @@ const schema = z.object({
   DATABASE_URL: z.string().min(1).optional(),
   /** Katalog na zdjęcia wgrywane z panelu (dysk serwera). Na hostingu bezdyskowym użyj S3/R2. */
   MEDIA_DIR: z.string().min(1).default(".data/media"),
+  /** PWA (manifest, service worker, instalacja na telefonie) to późniejszy etap – domyślnie wyłączone. */
+  ENABLE_PWA: z.enum(["true", "false"]).default("false"),
 });
 
 const parsed = schema.parse({
@@ -20,6 +22,7 @@ const parsed = schema.parse({
   ALLOW_INDEXING: process.env.ALLOW_INDEXING || undefined,
   DATABASE_URL: process.env.DATABASE_URL || undefined,
   MEDIA_DIR: process.env.MEDIA_DIR || undefined,
+  ENABLE_PWA: process.env.ENABLE_PWA || undefined,
 });
 
 export const env = {
@@ -28,4 +31,5 @@ export const env = {
   allowIndexing: parsed.ALLOW_INDEXING === "true",
   databaseUrl: parsed.DATABASE_URL,
   mediaDir: parsed.MEDIA_DIR,
+  pwaEnabled: parsed.ENABLE_PWA === "true",
 } as const;

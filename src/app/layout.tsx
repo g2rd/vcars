@@ -55,7 +55,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     // suppressHydrationWarning: rozszerzenia przeglądarki (Grammarly, Dark Reader…) dopisują
     // atrybuty do <html>/<body> przed hydracją. Wycisza to różnice tylko w atrybutach tych
     // dwóch elementów – zawartość strony nadal jest sprawdzana.
-    <html lang={site.language} className={inter.variable} suppressHydrationWarning>
+    // data-scroll-behavior="smooth": globals.css ustawia płynne przewijanie. Next.js 16 nie wyłącza go
+    // już sam przy zmianie strony, więc bez tego atrybutu po wejściu na nową stronę ekran „jedzie"
+    // animowanie z poprzedniej pozycji (np. ze stopki) zamiast od razu pokazać górę strony.
+    <html
+      lang={site.language}
+      className={inter.variable}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <body className="flex min-h-dvh flex-col antialiased" suppressHydrationWarning>
         {children}
       </body>
