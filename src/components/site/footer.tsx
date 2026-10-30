@@ -14,92 +14,95 @@ export async function SiteFooter() {
   return (
     <footer className="on-dark bg-ink pb-24 pt-12 text-paper md:pb-12 md:pt-16">
       <div className="container-page">
-        <Logo size="lg" className="mb-8" />
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          <nav aria-label="Flota">
-            <h2 className={headingClass}>Flota</h2>
-            <ul className="space-y-2">
-              {categories.map((category) => (
-                <li key={category.slug}>
-                  <Link href={`/wynajem/${category.slug}`} className={linkClass}>
-                    {category.name}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link href="/flota" className={linkClass}>
-                  Cała flota
-                </Link>
-              </li>
-            </ul>
-          </nav>
-
-          <nav aria-label="Firma">
-            <h2 className={headingClass}>Firma</h2>
-            <ul className="space-y-2">
-              {mainNav
-                .filter((item) => item.href !== "/flota")
-                .map((item) => (
-                  <li key={item.href}>
-                    <Link href={item.href} className={linkClass}>
-                      {item.label}
+        {/* Od md logo stoi w lewej kolumnie, a linki obok niego (2×2, od xl w czterech kolumnach). */}
+        <div className="grid gap-8 md:grid-cols-[14rem_1fr] md:gap-12">
+          <Logo size="lg" className="self-start" />
+          <div className="grid grid-cols-2 gap-8 xl:grid-cols-4">
+            <nav aria-label="Flota">
+              <h2 className={headingClass}>Flota</h2>
+              <ul className="space-y-2">
+                {categories.map((category) => (
+                  <li key={category.slug}>
+                    <Link href={`/wynajem/${category.slug}`} className={linkClass}>
+                      {category.name}
                     </Link>
                   </li>
                 ))}
-              <li>
-                <Link href="/zapytanie" className={linkClass}>
-                  Zapytaj o termin
-                </Link>
-              </li>
-            </ul>
-          </nav>
-
-          <nav aria-label="Informacje prawne">
-            <h2 className={headingClass}>Informacje</h2>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/regulamin" className={linkClass}>
-                  Regulamin wynajmu
-                </Link>
-              </li>
-              <li>
-                <Link href="/polityka-prywatnosci" className={linkClass}>
-                  Polityka prywatności
-                </Link>
-              </li>
-              <li>
-                <Link href="/zrodla-zdjec" className={linkClass}>
-                  Źródła zdjęć
-                </Link>
-              </li>
-            </ul>
-          </nav>
-
-          <div>
-            <h2 className={headingClass}>Kontakt</h2>
-            <address className="space-y-2 text-body-sm not-italic text-ash">
-              <p>
-                <span className="text-paper">{site.name}</span>
-                <br />
-                {tieLastWord(site.address.street)}
-                <br />
-                {site.address.postalCode} {site.address.city}
-              </p>
-              <p>
-                <a href={`tel:${site.phone.e164}`} className="text-paper hover:underline">
-                  {site.phone.display}
-                </a>
-                <br />
-                <a href={`mailto:${site.email}`} className="hover:text-paper hover:underline">
-                  {site.email}
-                </a>
-              </p>
-              <ul>
-                {site.openingHours.map((hours) => (
-                  <li key={hours.label}>{hours.label}</li>
-                ))}
+                <li>
+                  <Link href="/flota" className={linkClass}>
+                    Cała flota
+                  </Link>
+                </li>
               </ul>
-            </address>
+            </nav>
+
+            <nav aria-label="Firma">
+              <h2 className={headingClass}>Firma</h2>
+              <ul className="space-y-2">
+                {mainNav
+                  .filter((item) => item.href !== "/flota")
+                  .map((item) => (
+                    <li key={item.href}>
+                      <Link href={item.href} className={linkClass}>
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                <li>
+                  <Link href="/zapytanie" className={linkClass}>
+                    Zapytaj o termin
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+
+            <nav aria-label="Informacje prawne">
+              <h2 className={headingClass}>Informacje</h2>
+              <ul className="space-y-2">
+                <li>
+                  <Link href="/regulamin" className={linkClass}>
+                    Regulamin wynajmu
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/polityka-prywatnosci" className={linkClass}>
+                    Polityka prywatności
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/zrodla-zdjec" className={linkClass}>
+                    Źródła zdjęć
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+
+            <div>
+              <h2 className={headingClass}>Kontakt</h2>
+              <address className="space-y-2 text-body-sm not-italic text-ash">
+                <p>
+                  <span className="text-paper">{site.name}</span>
+                  <br />
+                  {tieLastWord(site.address.street)}
+                  <br />
+                  {site.address.postalCode} {site.address.city}
+                </p>
+                <p>
+                  <a href={`tel:${site.phone.e164}`} className="text-paper hover:underline">
+                    {site.phone.display}
+                  </a>
+                  <br />
+                  <a href={`mailto:${site.email}`} className="hover:text-paper hover:underline">
+                    {site.email}
+                  </a>
+                </p>
+                <ul>
+                  {site.openingHours.map((hours) => (
+                    <li key={hours.label}>{hours.label}</li>
+                  ))}
+                </ul>
+              </address>
+            </div>
           </div>
         </div>
 
