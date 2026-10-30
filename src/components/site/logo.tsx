@@ -6,15 +6,16 @@ import { cn } from "@/lib/cn";
 type LogoProps = {
   href?: string;
   label?: string;
-  /** `md` – pasek nagłówka i panelu, `lg` – stopka. */
+  /** `md` – napis z liniami prędkości (nagłówek i panel), `lg` – pełny znak z busem (stopka). */
   size?: "md" | "lg";
   className?: string;
 };
 
 /**
- * Logo firmy (SVG z `public/brand`) w wersji białej na czarne belki: nagłówek, panel
- * i stopka. Podpis „Wynajem samochodów" jest pominięty, bo przy wysokości paska byłby
- * nieczytelny; pełne wersje (z podpisem i sylwetką busa) leżą obok w `public/brand`.
+ * Logo firmy (SVG z `public/brand`) w wersji białej na czarne belki. Na pasku nagłówka
+ * pełny znak byłby nieczytelny, więc `md` pokazuje sam napis, a `lg` całość: bus, napis
+ * i podpis „Wypożyczalnia samochodów dostawczych". Wersja z numerem telefonu
+ * (`logo-full.svg`) jest tylko do druku i dokumentów, bo numer na stronie podajemy tekstem.
  */
 export function Logo({ href = "/", label, size = "md", className }: LogoProps) {
   const large = size === "lg";
@@ -22,18 +23,18 @@ export function Logo({ href = "/", label, size = "md", className }: LogoProps) {
   return (
     <Link
       href={href}
-      className={cn("flex min-h-11 items-center text-paper", className)}
+      className={cn("flex min-h-11 w-fit items-center text-paper", className)}
       aria-label={label ?? `${site.name} – strona główna`}
     >
       {/* SVG nie wymaga optymalizacji obrazów; alt pusty, bo nazwę podaje link (aria-label). */}
       <Image
-        src="/brand/logo-wordmark-negative.svg"
+        src={large ? "/brand/logo-lockup-negative.svg" : "/brand/logo-wordmark-negative.svg"}
         alt=""
-        width={large ? 220 : 171}
-        height={large ? 36 : 28}
+        width={large ? 224 : 186}
+        height={large ? 227 : 40}
         unoptimized
-        loading="eager"
-        className={cn("w-auto", large ? "h-9" : "h-7")}
+        loading={large ? "lazy" : "eager"}
+        className={cn("h-auto", large ? "w-44 md:w-56" : "w-[11.625rem]")}
       />
     </Link>
   );

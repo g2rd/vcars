@@ -34,7 +34,7 @@ export function AdminShell({
         <div className="space-y-8">
           <div className="px-1 pt-1">
             <Logo href="/admin" label="Panel VCars – start" />
-            <p className="mt-1 pl-[2.375rem] text-caption text-ash">Panel wypożyczalni</p>
+            <p className="mt-1 pl-[2.1rem] text-caption text-ash">Panel wypożyczalni</p>
           </div>
           <AdminSideNav items={items} />
         </div>

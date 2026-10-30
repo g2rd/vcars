@@ -24,11 +24,11 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
           <Image
             src="/brand/logo-wordmark.svg"
             alt={site.name}
-            width={220}
-            height={36}
+            width={200}
+            height={43}
             unoptimized
             loading="eager"
-            className="mx-auto h-9 w-auto"
+            className="mx-auto h-auto w-52"
           />
           <h1 className="mt-4 text-heading-sm font-medium">Panel wypożyczalni</h1>
         </div>

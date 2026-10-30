@@ -70,7 +70,8 @@ hostingu produkcyjnego.
 
 ### Materiały od klienta (§ 2, ostatni akapit)
 
-- [ ] ⏸ Teksty, logo, dane firmy (adres, telefon, e-mail, godziny, NIP)
+- [x] Logo (wersja pionowa z busem; na stronie jako SVG: napis w nagłówku, pełny znak w stopce, „V" w ikonach)
+- [ ] ⏸ Teksty, dane firmy (adres, telefon, e-mail, godziny, NIP)
 - [ ] ⏸ Cenniki i warunki najmu
 - [ ] ⏸ Regulamin i polityka prywatności (Wykonawca nie świadczy usług prawnych)
 
@@ -191,6 +192,7 @@ sekcja „Co dalej”.
 | 2026-10-30 | Instalacja PWA wyłączona (to późniejszy etap), poprawka przewijania po zmianie strony |
 | 2026-10-30 | Publiczne demo dla klienta (tymczasowy link) do wstępnej akceptacji |
 | 2026-10-30 | Karuzela aut i promocji na stronie głównej (automatyczne przewijanie, mobile first) |
+| 2026-10-30 | Logo klienta w nagłówku, stopce, panelu, ikonach i kartach udostępniania (pierwsza wersja zastąpiona właściwą) |
 
 ## Otwarte decyzje i pytania do klienta
 

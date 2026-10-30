@@ -105,7 +105,7 @@ export async function renderOgImage({ title, subtitle, footer, body, palette, ph
         >
           <div style={{ display: "flex", alignItems: "center" }}>
             {/* eslint-disable-next-line @next/next/no-img-element -- generator OG nie używa next/image */}
-            <img src={logoUri} alt={site.name} width={276} height={45} />
+            <img src={logoUri} alt={site.name} width={260} height={56} />
           </div>
 
           <div style={{ display: "flex", flexDirection: "column" }}>
