@@ -95,7 +95,7 @@ export default async function ContactPage() {
                 href={directionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 inline-block text-body-sm underline underline-offset-2"
+                className="mt-1 inline-flex min-h-11 items-center text-body-sm underline underline-offset-2"
               >
                 Wyznacz trasę w Mapach Google
               </a>

@@ -12,9 +12,12 @@ import { VehicleMedia } from "./vehicle-media";
 export function VehicleCard({
   vehicle,
   headingLevel = "h3",
+  eager = false,
 }: {
   vehicle: Vehicle;
   headingLevel?: "h2" | "h3";
+  /** Pierwszy rząd kart leży nad zagięciem (LCP): zdjęcie ładowane od razu, bez lazy. */
+  eager?: boolean;
 }) {
   const Heading = headingLevel;
   const name = vehicleName(vehicle);
@@ -24,6 +27,7 @@ export function VehicleCard({
       <VehicleMedia
         vehicle={vehicle}
         sizes="(min-width: 1200px) 384px, (min-width: 768px) 50vw, 100vw"
+        eager={eager}
       />
 
       <div className="flex flex-1 flex-col justify-between gap-5 p-6">

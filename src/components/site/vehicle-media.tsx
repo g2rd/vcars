@@ -9,6 +9,8 @@ type VehicleMediaProps = {
   sizes: string;
   /** Zdjęcie nad zagięciem (LCP): ładowane z wysokim priorytetem. */
   preload?: boolean;
+  /** Zdjęcie nad zagięciem, ale nie jedyne (np. pierwszy rząd kart): bez opóźnionego ładowania. */
+  eager?: boolean;
   className?: string;
 };
 
@@ -17,7 +19,13 @@ type VehicleMediaProps = {
  * Auto bez zdjęcia dostaje ilustrację, więc nowe pozycje dodane w panelu
  * admina wyglądają poprawnie jeszcze przed wgraniem fotografii.
  */
-export function VehicleMedia({ vehicle, sizes, preload = false, className }: VehicleMediaProps) {
+export function VehicleMedia({
+  vehicle,
+  sizes,
+  preload = false,
+  eager = false,
+  className,
+}: VehicleMediaProps) {
   const photo = vehicle.images[0];
 
   return (
@@ -29,6 +37,7 @@ export function VehicleMedia({ vehicle, sizes, preload = false, className }: Veh
           fill
           sizes={sizes}
           preload={preload}
+          loading={eager ? "eager" : undefined}
           className="object-cover"
         />
       ) : (

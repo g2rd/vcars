@@ -6,7 +6,7 @@ export function Logo({ href = "/", label }: { href?: string; label?: string }) {
   return (
     <Link
       href={href}
-      className="flex items-center gap-2.5 text-paper"
+      className="flex min-h-11 items-center gap-2.5 text-paper"
       aria-label={label ?? `${site.name} – strona główna`}
     >
       <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false">

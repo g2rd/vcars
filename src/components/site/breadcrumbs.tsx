@@ -16,7 +16,11 @@ export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
                 </span>
               ) : (
                 <>
-                  <Link href={item.path} className="hover:text-ink hover:underline">
+                  {/* after: powiększa pole dotyku do ok. 44 px bez zmiany układu okruszków */}
+                  <Link
+                    href={item.path}
+                    className="relative hover:text-ink hover:underline after:absolute after:inset-x-0 after:-inset-y-3"
+                  >
                     {item.name}
                   </Link>
                   <span aria-hidden="true">/</span>

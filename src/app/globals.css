@@ -27,8 +27,9 @@
   --radius-ui: 8px;
 
   /* Skala typograficzna (Major Second 1.125, baza 16 px). */
-  --text-caption: 0.75rem;
-  --text-caption--line-height: 1.67;
+  /* 13 px zamiast 12 px: na telefonie etykiety i opisy muszą być czytelne bez przybliżania. */
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.54;
   --text-body-sm: 0.875rem;
   --text-body-sm--line-height: 1.5;
   --text-body: 1rem;

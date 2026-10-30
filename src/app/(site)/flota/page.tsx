@@ -63,8 +63,8 @@ export default async function FleetPage() {
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {vehicles.map((vehicle) => (
-            <VehicleCard key={vehicle.slug} vehicle={vehicle} headingLevel="h2" />
+          {vehicles.map((vehicle, index) => (
+            <VehicleCard key={vehicle.slug} vehicle={vehicle} headingLevel="h2" eager={index < 3} />
           ))}
         </div>
 
@@ -77,7 +77,7 @@ export default async function FleetPage() {
               <caption className="sr-only">Porównanie pojemności, ładowności i cen aut</caption>
               <thead>
                 <tr className="border-b border-iron text-caption text-slate">
-                  <th scope="col" className="py-2 pr-4 font-normal">Auto</th>
+                  <th scope="col" className="sticky left-0 bg-paper py-2 pr-4 font-normal">Auto</th>
                   <th scope="col" className="px-4 py-2 font-normal">Przestrzeń</th>
                   <th scope="col" className="px-4 py-2 font-normal">Ładowność</th>
                   <th scope="col" className="px-4 py-2 font-normal">Miejsca</th>
@@ -87,7 +87,7 @@ export default async function FleetPage() {
               <tbody>
                 {vehicles.map((vehicle) => (
                   <tr key={vehicle.slug} className="border-b border-mist">
-                    <th scope="row" className="py-3 pr-4 font-medium">
+                    <th scope="row" className="sticky left-0 bg-paper py-3 pr-4 font-medium">
                       <Link href={`/flota/${vehicle.slug}`} className="hover:underline">
                         {vehicleName(vehicle)}
                       </Link>

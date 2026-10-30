@@ -15,7 +15,7 @@ export const site = {
   legalName: "VCars (dane demonstracyjne)",
   tagline: "Wynajem samochodów dostawczych",
   description:
-    "Wynajem busów i aut dostawczych w Warszawie: furgony, duże furgony, kontenery z windą. Ceny netto, szybki odbiór, umowa bez kolejek.",
+    "Wynajem busów i aut dostawczych w Zabrzu i na Śląsku: furgony, duże furgony, kontenery z windą. Ceny netto, szybki odbiór, umowa bez kolejek.",
 
   language: "pl",
   locale: "pl_PL",
@@ -29,14 +29,14 @@ export const site = {
 
   address: {
     street: "ul. Przykładowa 1",
-    postalCode: "00-001",
-    city: "Warszawa",
-    cityLocative: "Warszawie",
-    region: "mazowieckie",
+    postalCode: "41-800",
+    city: "Zabrze",
+    cityLocative: "Zabrzu",
+    region: "śląskie",
     countryCode: "PL",
   },
   /** Min. 5 miejsc po przecinku – tego oczekuje Google dla `geo`. */
-  geo: { latitude: 52.22977, longitude: 21.01178 },
+  geo: { latitude: 50.32492, longitude: 18.78576 },
 
   openingHours: [
     {
@@ -48,7 +48,8 @@ export const site = {
     { days: ["Saturday"], opens: "09:00", closes: "14:00", label: "Sob. 9:00–14:00" },
   ],
 
-  serviceAreas: ["Warszawa", "Piaseczno", "Pruszków", "Marki", "Legionowo"],
+  /** Miasta ościenne i aglomeracja; docelowo cały Górny Śląsk (zob. akapit „obszar" na stronie głównej). */
+  serviceAreas: ["Zabrze", "Gliwice", "Bytom", "Ruda Śląska", "Knurów", "Pyskowice", "Chorzów", "Katowice"],
 
   /** Adresy profili (Facebook, Google Business Profile, LinkedIn…) → `sameAs` w JSON-LD. */
   social: [] as string[],

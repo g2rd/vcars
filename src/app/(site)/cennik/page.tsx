@@ -47,7 +47,39 @@ export default async function PricingPage() {
           doliczamy {Math.round(site.rental.vatRate * 100)}% VAT.
         </p>
 
-        <div className="mt-8 overflow-x-auto">
+        {/* Telefon: karty zamiast szerokiej tabeli, żeby ceny nie wymagały przewijania w bok. */}
+        <ul className="mt-8 grid gap-3 md:hidden">
+          {vehicles.map((vehicle) => (
+            <li key={vehicle.slug} className="rounded-ui bg-mist p-4">
+              <Link
+                href={`/flota/${vehicle.slug}`}
+                className="inline-flex min-h-11 items-center text-body font-medium hover:underline"
+              >
+                {vehicleName(vehicle)}
+              </Link>
+              <dl className="mt-1 grid grid-cols-2 gap-x-6 gap-y-3 text-body-sm">
+                {thresholds.map((days) => {
+                  const tier = vehicle.priceTiers.find((t) => t.minDays === days);
+                  return (
+                    <div key={days} className="border-t border-iron pt-2">
+                      <dt className="text-caption text-slate">
+                        od {days} {pluralPl(days, "doby", "dób", "dób")}
+                      </dt>
+                      <dd className="text-body font-medium">
+                        {tier ? formatPln(tier.pricePerDayNet) : "—"}
+                      </dd>
+                    </div>
+                  );
+                })}
+              </dl>
+              <p className="mt-3 text-body-sm text-slate">
+                Kaucja zwrotna: {formatPln(vehicle.depositGrosze)}
+              </p>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-8 hidden overflow-x-auto md:block">
           <table className="w-full min-w-[44rem] text-left text-body-sm">
             <caption className="sr-only">Stawki za dobę netto wg długości najmu</caption>
             <thead>

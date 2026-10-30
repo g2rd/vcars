@@ -1,6 +1,7 @@
 import "server-only";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 import { cache } from "react";
 import { env } from "@/lib/env";
 import { ADMIN_PATH, LOGIN_PATH, SESSION_COOKIE } from "./constants";
@@ -43,6 +44,10 @@ export const getCurrentUser = cache(async (): Promise<AuthUser | null> => {
   if (!isAdminAvailable()) return null;
   const token = await readSessionToken();
   if (!token) return null;
+  // Walidacja sesji porównuje datę wygaśnięcia z „teraz". Przy Cache Components czas
+  // wolno odczytać dopiero po jawnym przejściu na tryb żądania, inaczej Next zgłasza
+  // „Blocking Route: new Date() while prerendering" (dotyczyło /admin i /admin/flota).
+  await connection();
   return (await getAuthService()).validateSession(token);
 });
 

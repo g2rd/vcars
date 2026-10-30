@@ -93,7 +93,8 @@ export default async function VehiclePage({ params }: Props) {
     ["Przestrzeń ładunkowa", formatVolume(vehicle.cargoVolumeM3)],
     [
       "Wymiary (dł. × szer. × wys.)",
-      `${formatMetersFromMm(lengthMm)} × ${formatMetersFromMm(widthMm)} × ${formatMetersFromMm(heightMm)}`,
+      // Twarda spacja przed „m", żeby na wąskim ekranie jednostka nie została sama w nowym wierszu.
+      `${formatMetersFromMm(lengthMm)} × ${formatMetersFromMm(widthMm)} × ${formatMetersFromMm(heightMm)}`.replaceAll(" m", " m"),
     ],
     ["Ładowność", formatKg(vehicle.payloadKg)],
     ["Dopuszczalna masa całkowita", formatKg(vehicle.grossWeightKg)],

@@ -48,3 +48,6 @@ next-env.d.ts
 
 # Dane lokalne (baza embedded-postgres, wgrane pliki)
 /.data/
+
+# Umowy i dokumenty z danymi klienta (nie do repozytorium)
+/umowy/

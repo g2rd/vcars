@@ -194,9 +194,9 @@ export default async function HomePage() {
             </h2>
             <p className="mt-4 text-body text-slate">
               Odbierasz auto w naszej wypożyczalni przy {site.address.street},{" "}
-              {site.address.city}. Obsługujemy klientów z całego regionu, w tym:{" "}
-              {site.serviceAreas.join(", ")}. Planujesz trasę poza miasto? Zapytaj o pakiet
-              kilometrów.
+              {site.address.city}. Wynajmujemy w Zabrzu i miastach ościennych, a z czasem na
+              całym Górnym Śląsku. Obsługujemy m.in.: {site.serviceAreas.join(", ")}. Planujesz
+              dłuższą trasę? Zapytaj o pakiet kilometrów.
             </p>
           </div>
           <div className="rounded-ui bg-mist p-6">

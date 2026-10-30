@@ -24,6 +24,9 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  // Panel działa też jako PWA na ekranie głównym: bez `cover` env(safe-area-inset-*) jest zawsze 0
+  // i dolna nawigacja nachodzi na pasek gestów iPhone'a.
+  viewportFit: "cover",
   themeColor: "#000000",
 };
 

@@ -87,8 +87,8 @@ export default async function CategoryPage({ params }: Props) {
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {vehicles.map((vehicle) => (
-            <VehicleCard key={vehicle.slug} vehicle={vehicle} headingLevel="h2" />
+          {vehicles.map((vehicle, index) => (
+            <VehicleCard key={vehicle.slug} vehicle={vehicle} headingLevel="h2" eager={index < 3} />
           ))}
         </div>
 
